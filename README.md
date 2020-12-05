@@ -1,1 +1,1 @@
-# Snake-Game
+# Caterpillar-Game
