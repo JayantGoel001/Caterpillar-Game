@@ -31,3 +31,30 @@ score_turtle.hideturtle()
 score_turtle.speed(0)
 
 wn.mainloop()
+
+left_limit = -t.window_width() / 2 + 100
+right_limit = t.window_height() / 2 - 100
+
+top_limit = t.window_height() / 2 - 100
+bottom_limit = -t.window_height() / 2 + 100
+
+
+def outside_window():
+    x, y = t.pos()
+    return not (left_limit < x < right_limit and bottom_limit < y < top_limit)
+
+
+def place_leaf():
+    leaf.hideturtle()
+    x, y = rd.randint(int(left_limit), int(right_limit)), rd.randint(int(bottom_limit), int(top_limit))
+    leaf.setx(x)
+    leaf.sety(y)
+    leaf.showturtle()
+
+
+def game_over():
+    pass
+
+
+def display_score():
+    pass
