@@ -10,23 +10,22 @@ right_limit = t.window_height() / 2 - 100
 top_limit = t.window_height() / 2 - 100
 bottom_limit = -t.window_height() / 2 + 100
 
-current_score = 0
 game_started = False
 
 caterpillar = t.Turtle()
+caterpillar.hideturtle()
 caterpillar.shape('square')
 caterpillar.speed(0)
 caterpillar.penup()
 caterpillar.color("white")
-caterpillar.hideturtle()
 
 leaf = t.Turtle()
+leaf.hideturtle()
 leaf.color("green")
 leaf_shape = ((0, 0), (14, 2), (18, 6), (20, 20), (6, 18), (2, 14))
 t.register_shape('leaf', leaf_shape)
 leaf.shape('leaf')
 leaf.penup()
-leaf.hideturtle()
 leaf.speed()
 
 text_turtle = False
@@ -61,7 +60,7 @@ def gameOver():
     t.write("Game Over!!!", align="center", font=("Arial", 30, "bold"))
 
 
-def displayScore():
+def displayScore(current_score):
     score_turtle.clear()
     score_turtle.penup()
     x = t.window_width() / 2 - 50
@@ -69,8 +68,6 @@ def displayScore():
     score_turtle.goto(x, y)
     score_turtle.pendown()
     score_turtle.write(str(current_score), align="right", font=("Arial", 40, "bold"))
-
-
 
 
 def startGame():
@@ -84,10 +81,47 @@ def startGame():
     caterpillar_speed = 2
     caterpillar_length = 3
     caterpillar.shapesize(1, caterpillar_length, 1)
-    displayScore()
+    current_score = 0
+    displayScore(current_score=current_score)
     placeLeaf()
+
+    while True:
+        caterpillar.forward(caterpillar_speed)
+        if caterpillar.distance(leaf) < 20:
+            placeLeaf()
+            caterpillar_length = caterpillar_length + 1
+            caterpillar.shapesize(1, caterpillar_speed, 1)
+            caterpillar_speed += 1
+            current_score += 10
+            displayScore(current_score)
+        if outsideWindow():
+            gameOver()
+            break
+
+
+def move_up():
+    if caterpillar.heading() == 0 or caterpillar.heading() == 180:
+        pass
+
+
+def move_down():
+    pass
+
+
+def move_right():
+    pass
+
+
+def move_left():
+    pass
 
 
 t.onkey(startGame, 'space')
+
+t.onkey(move_up, 'up')
+t.onkey(move_down, 'down')
+t.onkey(move_right, 'right')
+t.onkey(move_left, 'left')
+
 t.listen()
 t.mainloop()
